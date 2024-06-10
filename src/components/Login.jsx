@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
-import axios from 'axios'
 
 const Error = ({ message }) => {
   if (message === '') return null
@@ -18,9 +17,7 @@ const Login = ({ setUser }) => {
   const [errorMessage, setErrorMessage] = useState('')
 
   const configUser = (user) => {
-    window.localStorage.setItem(
-      'loggedNoteappUser', JSON.stringify(user)
-    ) 
+    loginService.setStoredUser(user)
     blogService.setToken(user.token)
     setUser(user)
     setUsername('')
@@ -30,7 +27,7 @@ const Login = ({ setUser }) => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      const user = await loginService.login({ username, password})
+      const user = await loginService.login({ username, password })
       configUser(user)
     } catch (error) {
       const message = error.response.data.error || 'Error logging in'

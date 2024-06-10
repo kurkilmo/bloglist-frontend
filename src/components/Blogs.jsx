@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import Blog from './Blog'
 import blogService from '../services/blogs'
+import loginService from '../services/login'
 
-const Blogs = ({ user }) => {
+
+const Blogs = ({ user, setUser }) => {
   const [blogs, setBlogs] = useState([])
 
   useEffect(() => {
@@ -11,14 +13,23 @@ const Blogs = ({ user }) => {
     )
   }, [])
 
+  const logout = () => {
+    setUser(null)
+    loginService.deleteStoredUser()
+  }
 
   return (
     <div>
       <h2>blogs</h2>
-      <p>{user.name} logged in<br/></p>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
+      <div>
+        {user.name} logged in
+        <button onClick={logout}>logout</button>
+      </div>
+      <ul>
+        {blogs.map(blog =>
+          <Blog key={blog.id} blog={blog} />
+        )}
+      </ul>
     </div>
   )
 }

@@ -6,4 +6,18 @@ const login = async credentials => {
   return response.data
 }
 
-export default { login }
+const setStoredUser = (user) => {
+  window.localStorage.setItem(
+    'loggedUser', JSON.stringify(user)
+  )
+}
+
+const getStoredUser = () => {
+  return JSON.parse(window.localStorage.getItem('loggedUser'))
+}
+
+const deleteStoredUser = () => {
+  window.localStorage.removeItem('loggedUser')
+}
+
+export default { login, setStoredUser, getStoredUser, deleteStoredUser }
