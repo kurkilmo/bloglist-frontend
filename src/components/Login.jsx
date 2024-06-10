@@ -2,19 +2,9 @@ import { useState } from 'react'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
 
-const Error = ({ message }) => {
-  if (message === '') return null
-  return (
-    <div className="error">
-      {message}
-    </div>
-  )
-}
-
-const Login = ({ setUser }) => {
+const Login = ({ setUser, notify }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
 
   const configUser = (user) => {
     loginService.setStoredUser(user)
@@ -31,17 +21,12 @@ const Login = ({ setUser }) => {
       configUser(user)
     } catch (error) {
       const message = error.response.data.error || 'Error logging in'
-      setErrorMessage(message)
-      setTimeout(() => {
-        setErrorMessage('')
-      }, 2500)
+      notify(message, 'red')
     }
   }
 
   return (
     <div className='login'>
-      <h2>login to application</h2>
-      <Error message={errorMessage} />
       <form onSubmit={handleLogin}>
         <div>
           username
