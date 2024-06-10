@@ -50,6 +50,8 @@ const Blogs = ({ user, setUser, notify }) => {
     loginService.deleteStoredUser()
   }
 
+  const sortedBlogs = blogs.sort((a, b) => (b.likes - a.likes))
+
   return (
     <div>
       <div className='userInfo'>
@@ -60,7 +62,7 @@ const Blogs = ({ user, setUser, notify }) => {
         <BlogForm addBlog={addBlog}/>
       </Togglable>
       <ul>
-        {blogs.map(blog =>
+        {sortedBlogs.map(blog =>
           <Blog key={blog.id} blog={blog} update={updateBlogs} />
         )}
       </ul>
