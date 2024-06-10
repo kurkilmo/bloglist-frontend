@@ -1,11 +1,15 @@
 import { useState } from 'react'
+import blogService from '../services/blogs'
 
-const Blog = ({ blog }) => {
-  const [ expanded, setExpanded] = useState(false)
+const Blog = ({ blog, update }) => {
+  const [ expanded, setExpanded ] = useState(false)
 
   const handleLike = (event) => {
     event.preventDefault()
-    console.log(`Liked ${blog.title}`)
+    blog.likes += 1
+    blogService.update(blog).then(updated => {
+      update(updated)
+    })
   }
 
   const extraInfo = () => {

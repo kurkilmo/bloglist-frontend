@@ -1,9 +1,11 @@
 import axios from 'axios'
 const baseUrl = '/api/blogs'
 
-let token = null
+let config = {
+  headers: { Authorization: '' }
+}
 const setToken = (newToken) => {
-  token = `Bearer ${newToken}`
+  config.headers.Authorization = `Bearer ${newToken}`
 }
 
 const getAll = () => {
@@ -12,11 +14,18 @@ const getAll = () => {
 }
 
 const create = (blog) => {
-  const headers = {
-    headers: { Authorization: token },
-  }
-  const request = axios.post(baseUrl, blog, headers)
+  const request = axios.post(baseUrl, blog, config)
   return request.then(res => res.data)
 }
 
-export default { getAll, setToken, create }
+const update = (blog) => {
+  const blogToSend = {
+    ...blog,
+    user: blog.user.id
+  }
+  const url = `${baseUrl}/${blog.id}`
+  const request = axios.put(url, blogToSend, config)
+  return request.then(res => res.data)
+}
+
+export default { getAll, setToken, create, update }

@@ -16,9 +16,18 @@ const Blogs = ({ user, setUser, notify }) => {
     )
   }, [])
 
+  const updateBlogs = (updatedBlog) => {
+    setBlogs(blogs.map(b => b.id === updatedBlog.id
+      ? { ...updatedBlog, user }
+      : b))
+  }
+
   const addBlog = (newBlog) => {
     blogService.create(newBlog).then(createdBlog => {
-      setBlogs(blogs.concat(createdBlog))
+      setBlogs(blogs.concat({
+        ...createdBlog,
+        user
+      }))
       blogFormRef.current.toggleVisibility()
 
       const author = createdBlog.author
@@ -52,7 +61,7 @@ const Blogs = ({ user, setUser, notify }) => {
       </Togglable>
       <ul>
         {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
+          <Blog key={blog.id} blog={blog} update={updateBlogs} />
         )}
       </ul>
     </div>
