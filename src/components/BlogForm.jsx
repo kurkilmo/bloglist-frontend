@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 const BlogForm = ({ addBlog }) => {
-  const [title, setTitle] = useState('ti')  // TODO: placeholders
-  const [author, setAuthor] = useState('au')
-  const [url, setUrl] = useState('ur')
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
   const handleCreate = async (event) => {
     event.preventDefault()

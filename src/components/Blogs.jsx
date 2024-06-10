@@ -16,10 +16,24 @@ const Blogs = ({ user, setUser, notify }) => {
     )
   }, [])
 
-  const updateBlogs = (updatedBlog) => {
-    setBlogs(blogs.map(b => b.id === updatedBlog.id
-      ? { ...updatedBlog, user }
-      : b))
+  const likeBlog = (blog) => {
+    blog.likes += 1
+    blogService.update(blog).then(updated => {
+      setBlogs(blogs.map(b => b.id === updated.id
+        ? { ...updated, user }
+        : b))
+    })
+  }
+
+  const deleteBlog = (blog) => {
+    if (!window.confirm(`Delete ${blog.title} by ${blog.author}?`)) return
+
+    blogService.deleteBlog(blog).then(ignored => {
+      notify(`Deleted ${blog.title}`, 'green')
+      setBlogs(blogs.filter(b => b.id !== blog.id))
+    }).catch((ignored) => {
+      notify('Error removing blog', 'red')
+    })
   }
 
   const addBlog = (newBlog) => {
@@ -63,7 +77,7 @@ const Blogs = ({ user, setUser, notify }) => {
       </Togglable>
       <ul>
         {sortedBlogs.map(blog =>
-          <Blog key={blog.id} blog={blog} update={updateBlogs} />
+          <Blog key={blog.id} user={user} blog={blog} like={likeBlog} remove={deleteBlog} />
         )}
       </ul>
     </div>

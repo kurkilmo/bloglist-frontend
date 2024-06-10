@@ -1,15 +1,23 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
 
-const Blog = ({ blog, update }) => {
+const Blog = ({ user, blog, like, remove }) => {
   const [ expanded, setExpanded ] = useState(false)
 
   const handleLike = (event) => {
     event.preventDefault()
-    blog.likes += 1
-    blogService.update(blog).then(updated => {
-      update(updated)
-    })
+    like(blog)
+  }
+
+  const handleDelete = (event) => {
+    event.preventDefault()
+    remove(blog)
+  }
+
+  const deleteButton = () => {
+    if (user.username !== blog.user.username) return null
+    return (
+      <button onClick={handleDelete}>delete</button>
+    )
   }
 
   const extraInfo = () => {
@@ -20,6 +28,7 @@ const Blog = ({ blog, update }) => {
         {blog.likes}
         <button onClick={handleLike}>like</button> <br />
         {blog.user.name} <br/>
+        {deleteButton()}
       </div>
     )
   }

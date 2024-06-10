@@ -28,4 +28,10 @@ const update = (blog) => {
   return request.then(res => res.data)
 }
 
-export default { getAll, setToken, create, update }
+const deleteBlog = (blog) => {
+  const url = `${baseUrl}/${blog.id}`
+  const request = axios.delete(url, config)
+  return request.then(res => res.data)
+}
+
+export default { getAll, setToken, create, update, deleteBlog }
