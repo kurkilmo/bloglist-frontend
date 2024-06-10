@@ -25,3 +25,12 @@ ul {
 .userInfo {
   margin-bottom: 1em;
 }
+
+.blog {
+  padding-top: 10px;
+  padding-left: 2px;
+  padding-bottom: 5px;
+  border: solid;
+  border-width: 2px;
+  margin-bottom: 5px;
+}
