@@ -48,6 +48,7 @@ export default [
         'varsIgnorePattern': '[iI]gnored',
         'argsIgnorePattern': '[iI]gnored'
       }],
+      'caughtErrorsIgnorePattern': '^ignore',
       'react/prop-types': 0,
       'react/react-in-jsx-scope': 0
     }
