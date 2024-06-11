@@ -52,4 +52,20 @@ describe('<Blog />', () => {
     expect(title).toBeDefined()
     expect(author).toBeDefined()
   })
+
+  test('like button is called', async () => {
+    const handleLike = vi.fn()
+    render(
+      <Blog user={user} blog={blog} like={handleLike} />
+    )
+
+    const mockUser = userEvent.setup()
+    const viewButton = screen.getByText('view')
+    await mockUser.click(viewButton)
+    const likeButton = screen.getByText('like')
+    await mockUser.click(likeButton)
+    await mockUser.click(likeButton)
+
+    expect(handleLike.mock.calls).toHaveLength(2)
+  })
 })
