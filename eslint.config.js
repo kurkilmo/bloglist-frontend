@@ -8,7 +8,13 @@ import stylistic from '@stylistic/eslint-plugin'
 export default [
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
-  { files: ['**/*.jsx'], languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } } } },
+  {
+    files: ['**/*.jsx'],
+    languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } } },
+    settings: {
+      react: { version: 'detect' },
+    }
+  },
   ...fixupConfigRules(pluginReactConfig),
   {
     plugins: {
@@ -40,11 +46,6 @@ export default [
         'error', { 'before': true, 'after': true }
       ],
       'no-unused-vars': ['error', {
-        'vars': 'all',
-        'args': 'after-used',
-        'caughtErrors': 'all',
-        'ignoreRestSiblings': false,
-        'reportUsedIgnorePattern': false,
         'varsIgnorePattern': '[iI]gnored',
         'argsIgnorePattern': '[iI]gnored',
         'caughtErrorsIgnorePattern': '^ignore'
