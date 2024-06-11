@@ -3,10 +3,11 @@ import pluginJs from '@eslint/js'
 import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js'
 import { fixupConfigRules } from '@eslint/compat'
 import stylistic from '@stylistic/eslint-plugin'
+import vitestGlobals from './vitest-globals.js'
 
 
 export default [
-  { languageOptions: { globals: globals.browser } },
+  { languageOptions: { globals: { ...globals.browser, ...vitestGlobals } } },
   pluginJs.configs.recommended,
   {
     files: ['**/*.jsx'],
